@@ -13,7 +13,6 @@
     "auth"
   ],
   "devDependencies": {
-    "@swc-node/register": "^1.9.1",
     "@tsconfig/node-lts": "^20.1.3",
     "@types/node": "^20.14.2",
     "prisma": "^5.15.0"
