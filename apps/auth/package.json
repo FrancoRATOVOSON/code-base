@@ -18,6 +18,8 @@
     "prisma": "^5.15.0"
   },
   "dependencies": {
-    "fastify": "^4.27.0"
+    "@prisma/client": "5.15.0",
+    "fastify": "^4.27.0",
+    "prisma-json-types-generator": "^3.0.4"
   }
 }

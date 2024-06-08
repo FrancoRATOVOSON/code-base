@@ -2,7 +2,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Sessions {
+  id String @id @default(uuid())
+  login String
+  password String
+  createdAt DateTime @default(now()) @map("created_at")
+  expirationDate DateTime
+  isActive Boolean @default(true)
+  tokenKey Bytes
+  /// [SessionDevice]
+  device Json
+  @@map("sessions")
 }
