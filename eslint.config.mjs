@@ -12,7 +12,7 @@ const compat = new FlatCompat({
   baseDirectory: path.dirname(url.fileURLToPath(import.meta.url))
 })
 
-export default [
+export default tseslint.config(
   eslint.configs.recommended,
   ...compat.extends('eslint-config-standard'),
   ...tseslint.configs.recommended,
@@ -53,4 +53,4 @@ export default [
       'prettier/prettier': 'warn'
     }
   }
-]
+)
