@@ -11,15 +11,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sessions {
+model Users {
   id String @id @default(uuid())
+  password String?
+  sessions Sessions[]
+  devices SessionDevice[]
+}
+
+model Sessions {
+  id String @id
   login String
-  password String
+  password Boolean
   createdAt DateTime @default(now()) @map("created_at")
   expirationDate DateTime
   isActive Boolean @default(true)
-  tokenKey Bytes
-  /// [SessionDevice]
-  device Json
+  user Users @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+  deviceId String
+  device SessionDevice @relation(fields: [deviceId], references: [id])
   @@map("sessions")
+}
+
+enum DeviceType {
+  Desktop
+  Mobile
+  Tablet
+  TV
+  Watch
+}
+
+enum DeviceClientType {
+  Web
+  Native
+}
+
+model SessionDevice {
+  id String @id @default(uuid())
+  deviceType DeviceType
+  manufacturer String
+  client DeviceClientType
+  appVersion String
+  deviceDetails String
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  sessions Sessions[]
 }
