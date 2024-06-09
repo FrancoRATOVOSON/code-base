@@ -12,23 +12,30 @@ datasource db {
 }
 
 model Users {
-  id String @id @default(uuid())
+  id String @id
   password String?
   sessions Sessions[]
-  devices SessionDevice[]
+  devices Devices[]
+  @@map("users")
+}
+
+enum AuthProvider {
+  GOOGLE
+  FACEBOOK
+  APPLE
 }
 
 model Sessions {
   id String @id
   login String
-  password Boolean
+  provider AuthProvider?
   createdAt DateTime @default(now()) @map("created_at")
-  expirationDate DateTime
-  isActive Boolean @default(true)
-  user Users @relation(fields: [userId], references: [id])
+  expirationDate DateTime @map("expiration_date")
+  isActive Boolean @default(true) @map("is_active")
   userId String @map("user_id")
-  deviceId String
-  device SessionDevice @relation(fields: [deviceId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
+  deviceId String @map("device_id")
+  device Devices @relation(fields: [deviceId], references: [id])
   @@map("sessions")
 }
 
@@ -45,14 +52,17 @@ enum DeviceClientType {
   Native
 }
 
-model SessionDevice {
+model Devices {
   id String @id @default(uuid())
-  deviceType DeviceType
-  manufacturer String
+  deviceType DeviceType @map("device_type")
   client DeviceClientType
-  appVersion String
-  deviceDetails String
-  userId String
+  appVersion String @map("app_version")
+  /// [DeviceDetails]
+  deviceDetails Json @map("device_details")
+  /// [DeviceLocation]
+  location Json
+  userId String @map("user_id")
   user Users @relation(fields: [userId], references: [id])
   sessions Sessions[]
+  @@map("devices")
 }

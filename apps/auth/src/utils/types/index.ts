@@ -1,17 +1,26 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-declare global {
-  namespace PrismaJson {
-    type SessionDevice = {
-      id: string
-      type: 'desktop' | 'mobile' | 'tablet'
-      manufacturer: string
-      client: {
-        type: 'web' | 'native'
-        version: string
-        details: string
-      }
-    }
+import { AuthProvider, Devices } from '@prisma/client'
+
+export type DeviceDetails = PrismaJson.DeviceDetails
+export type DeviceLocation = PrismaJson.DeviceLocation
+
+export type CreateSessionParams = {
+  user: {
+    id: string
+    login: string
+    password: string | null
+    provider: AuthProvider | null
   }
+  device: { id: string | null; details: Omit<Devices, 'userId' | 'id'> | null }
 }
 
-export {}
+export type CreateSessionReturnType = {
+  sessionId: string
+  deviceId: string
+  userId: string
+  userToken: string
+}
+
+export type GeneratedSessionType = {
+  id: string
+  expirationDate: Date
+}
