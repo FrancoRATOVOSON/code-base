@@ -6,10 +6,17 @@ const tokentKeyValidator = makeValidator<string>(key => {
   return key
 })
 
+const appPortValidator = makeValidator<number>(value => {
+  const port = Number.parseInt(value, 10)
+  if (Number.isNaN(port)) throw new Error('Error when getting port from .env')
+  return port
+})
+
 const env = cleanEnv(
   process.env,
   {
-    TOKEN_SECRET_KEY: tokentKeyValidator({ desc: 'token key for jwt' })
+    TOKEN_SECRET_KEY: tokentKeyValidator({ desc: 'token key for jwt' }),
+    PORT: appPortValidator()
   },
   {
     reporter: ({ errors }) => {

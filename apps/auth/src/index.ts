@@ -1,19 +1,20 @@
-import fastify from 'fastify'
+import app from './app'
+import env from './utils/helpers/env'
 
-const server = fastify()
+const port = env.PORT
 
-server.get('/ping', async () => {
-  return 'pong\n'
-})
+async function startApp() {
+  try {
+    await app.ready()
+    app.swagger()
+    const addr = await app.listen({ port })
 
-server.get('/hello', async () => {
-  return 'Hello, World!\n'
-})
-
-server.listen({ port: 8080 }, (err, addr) => {
-  if (err) {
-    console.error(err)
+    console.log(`App listening in address: ${addr}`)
+  } catch (error) {
+    console.error('App error')
+    console.error(error)
     process.exit(1)
   }
-  console.log(`Server listening at ${addr}`)
-})
+}
+
+startApp()
