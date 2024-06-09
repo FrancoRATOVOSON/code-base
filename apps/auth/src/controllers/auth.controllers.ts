@@ -1,4 +1,4 @@
-import { saveSession } from '#/services'
+import { createNewSession, createOrUpdateDevice } from '#/services'
 import { generateSession, generateToken } from '#/utils/helpers'
 import { CreateSessionParams, CreateSessionReturnType } from '#/utils/types'
 
@@ -8,7 +8,8 @@ export async function createSession({
 }: CreateSessionParams): Promise<CreateSessionReturnType> {
   if (!device.id && !device.details) throw Error('No device detais')
   const session = generateSession()
-  const { deviceId, userId } = await saveSession(session, { user, device })
+  const { id: deviceId } = await createOrUpdateDevice(device)
+  const { userId } = await createNewSession(session, user, { deviceId })
   const userToken = generateToken({ id: userId })
   return { sessionId: session.id, deviceId, userId, userToken }
 }

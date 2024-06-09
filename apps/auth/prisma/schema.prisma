@@ -15,7 +15,6 @@ model Users {
   id String @id
   password String?
   sessions Sessions[]
-  devices Devices[]
   @@map("users")
 }
 
@@ -61,8 +60,6 @@ model Devices {
   deviceDetails Json @map("device_details")
   /// [DeviceLocation]
   location Json
-  userId String @map("user_id")
-  user Users @relation(fields: [userId], references: [id])
   sessions Sessions[]
   @@map("devices")
 }

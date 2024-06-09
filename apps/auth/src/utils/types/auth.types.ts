@@ -1,6 +1,10 @@
 import { z } from 'zod'
 
-import { createSessionBodySchema, createSessionResponseSchema } from '#/schema'
+import {
+  createSessionBodySchema,
+  createSessionDeviceSchema,
+  createSessionResponseSchema
+} from '#/schema'
 
 export type DeviceDetails = PrismaJson.DeviceDetails
 export type DeviceLocation = PrismaJson.DeviceLocation
@@ -13,3 +17,5 @@ export type GeneratedSessionType = {
   id: string
   expirationDate: Date
 }
+
+export type CreateSessionDeviceType = z.infer<typeof createSessionDeviceSchema>

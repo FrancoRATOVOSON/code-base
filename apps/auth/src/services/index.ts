@@ -1,1 +1,2 @@
-export * from './auth.services'
+export * from './device.services'
+export * from './session.services'
