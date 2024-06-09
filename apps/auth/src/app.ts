@@ -10,8 +10,11 @@ import {
 } from 'fastify-type-provider-zod'
 
 import { auth } from './router'
+import { logger } from './utils/helpers'
 
-const app = fastify()
+const app = fastify({
+  logger
+})
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)

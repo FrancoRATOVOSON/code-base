@@ -1,4 +1,4 @@
-import { cleanEnv, makeValidator } from 'envalid'
+import { cleanEnv, makeValidator, str } from 'envalid'
 
 const tokentKeyValidator = makeValidator<string>(key => {
   if (typeof key !== 'string') throw new Error('Token key must be a string')
@@ -16,7 +16,8 @@ const env = cleanEnv(
   process.env,
   {
     TOKEN_SECRET_KEY: tokentKeyValidator({ desc: 'token key for jwt' }),
-    PORT: appPortValidator()
+    PORT: appPortValidator(),
+    NODE_ENV: str({ choices: ['dev', 'prod'] })
   },
   {
     reporter: ({ errors }) => {
