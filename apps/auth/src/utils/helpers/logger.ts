@@ -21,6 +21,6 @@ const loggerDev = pino({
   }
 })
 
-const logger = env.NODE_ENV === 'prod' ? loggerProd : loggerDev
+const logger = env.NODE_ENV === 'production' ? loggerProd : loggerDev
 
 export default logger

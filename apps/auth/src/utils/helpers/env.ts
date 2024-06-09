@@ -17,7 +17,7 @@ const env = cleanEnv(
   {
     TOKEN_SECRET_KEY: tokentKeyValidator({ desc: 'token key for jwt' }),
     PORT: appPortValidator(),
-    NODE_ENV: str({ choices: ['dev', 'prod'] })
+    NODE_ENV: str({ choices: ['development', 'test', 'production'], default: 'development' })
   },
   {
     reporter: ({ errors }) => {

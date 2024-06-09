@@ -11,9 +11,10 @@ import {
 
 import { auth } from './router'
 import { logger } from './utils/helpers'
+import env from './utils/helpers/env'
 
 const app = fastify({
-  logger
+  logger: env.NODE_ENV === 'test' ? false : logger
 })
 
 app.setValidatorCompiler(validatorCompiler)

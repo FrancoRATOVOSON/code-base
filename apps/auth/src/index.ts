@@ -7,12 +7,9 @@ async function startApp() {
   try {
     await app.ready()
     app.swagger()
-    const addr = await app.listen({ port })
-
-    console.log(`App listening in address: ${addr}`)
+    await app.listen({ port })
   } catch (error) {
-    console.error('App error')
-    console.error(error)
+    app.log.error(error)
     process.exit(1)
   }
 }
