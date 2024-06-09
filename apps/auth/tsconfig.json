@@ -3,7 +3,13 @@
   "compilerOptions": {
     "target": "ES2017",
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "paths": {
+      "#/*": ["./*"],
+      "#utils/*": ["./utils/*"],
+      "#env": ["./utils/helpers/env"]
+    }
   },
   "include": ["src"]
 }

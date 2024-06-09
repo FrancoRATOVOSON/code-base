@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@eslint/js':
-        specifier: ^9.4.0
-        version: 9.4.0
       '@swc-node/register':
         specifier: ^1.9.1
         version: 1.9.1(@swc/core@1.5.25)(@swc/types@0.1.7)(typescript@5.4.5)
@@ -20,21 +17,6 @@ importers:
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
-      eslint:
-        specifier: ^9.4.0
-        version: 9.4.0
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.4.0)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.12.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint-plugin-n@16.6.2(eslint@9.4.0))(eslint-plugin-promise@6.2.0(eslint@9.4.0))(eslint@9.4.0)
-      eslint-plugin-perfectionist:
-        specifier: ^2.10.0
-        version: 2.10.0(eslint@9.4.0)(typescript@5.4.5)
-      eslint-plugin-prettier:
-        specifier: ^5.1.3
-        version: 5.1.3(eslint-config-prettier@9.1.0(eslint@9.4.0))(eslint@9.4.0)(prettier@3.3.1)
       nodemon:
         specifier: ^3.1.3
         version: 3.1.3
@@ -44,9 +26,6 @@ importers:
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
-      typescript-eslint:
-        specifier: ^7.12.0
-        version: 7.12.0(eslint@9.4.0)(typescript@5.4.5)
 
   apps/auth:
     dependencies:
@@ -87,9 +66,39 @@ importers:
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
+      eslint:
+        specifier: ^9.4.0
+        version: 9.4.0
+      eslint-config:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
       prisma:
         specifier: ^5.15.0
         version: 5.15.0
+
+  packages/eslint-config:
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.4.0
+        version: 9.4.0
+      eslint:
+        specifier: ^9.4.0
+        version: 9.4.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@9.4.0)
+      eslint-config-standard:
+        specifier: ^17.1.0
+        version: 17.1.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.12.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint-plugin-n@16.6.2(eslint@9.4.0))(eslint-plugin-promise@6.2.0(eslint@9.4.0))(eslint@9.4.0)
+      eslint-plugin-perfectionist:
+        specifier: ^2.10.0
+        version: 2.10.0(eslint@9.4.0)(typescript@5.4.5)
+      eslint-plugin-prettier:
+        specifier: ^5.1.3
+        version: 5.1.3(eslint-config-prettier@9.1.0(eslint@9.4.0))(eslint@9.4.0)(prettier@3.3.1)
+      typescript-eslint:
+        specifier: ^7.12.0
+        version: 7.12.0(eslint@9.4.0)(typescript@5.4.5)
 
 packages:
 

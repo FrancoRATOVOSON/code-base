@@ -1,6 +1,7 @@
 {
   "eslint.enable": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"

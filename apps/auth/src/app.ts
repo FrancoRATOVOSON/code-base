@@ -1,13 +1,15 @@
 import fastify from 'fastify'
+
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUi from '@fastify/swagger-ui'
+
 import {
   validatorCompiler,
   serializerCompiler,
   jsonSchemaTransform
 } from 'fastify-type-provider-zod'
-import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
 
-import routes from './router'
+import { auth } from './router'
 
 const app = fastify()
 
@@ -29,6 +31,6 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/documentation'
 })
 
-app.register(routes)
+app.register(auth)
 
 export default app

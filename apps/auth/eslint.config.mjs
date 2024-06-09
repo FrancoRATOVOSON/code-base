@@ -1,8 +1,14 @@
-import configBase from '../../eslint.config.mjs'
-import tseslint from 'typescript-eslint'
+// ts-check
 
-export default tseslint.config(...configBase, {
-  rules: {
-    '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }]
-  }
+import { createCustomGroups, createConfig } from 'eslint-config'
+
+const customConfig = createCustomGroups({
+  groups: {
+    fastify: ['fastify'],
+    fastifyPlugins: ['@fastify/*'],
+    fastifyCustom: ['fastify-*']
+  },
+  internals: ['#/**', '#utils/**', '#env']
 })
+
+export default createConfig(customConfig)

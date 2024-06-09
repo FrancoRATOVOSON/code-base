@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { deviceDetailsSchema, deviceLocationSchema } from '../../schema'
+
+import { deviceDetailsSchema, deviceLocationSchema } from '#/schema'
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {

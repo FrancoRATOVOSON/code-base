@@ -1,4 +1,5 @@
 import { createSigner } from 'fast-jwt'
+
 import env from './env'
 
 const tokenSigner = createSigner({
