@@ -5,28 +5,37 @@ export function saveSession(
   { id, expirationDate }: GeneratedSessionType,
   { user, device }: CreateSessionParams
 ) {
-  return prisma.sessions.create({
-    data: {
-      id,
-      expirationDate,
-      login: user.login,
-      provider: user.provider,
-      user: {
-        connectOrCreate: {
-          where: {
-            id: user.id
-          },
-          create: {
-            id: user.id,
-            password: user.password
+  return prisma.$transaction(async tx => {
+    const createdUser = await tx.users.upsert({
+      where: { id: user.id },
+      create: { id: user.id, password: user.password },
+      update: {}
+    })
+    const createdSession = await tx.sessions.create({
+      data: {
+        id,
+        expirationDate,
+        login: user.login,
+        provider: user.provider,
+        user: {
+          connectOrCreate: {
+            where: {
+              id: user.id
+            },
+            create: {
+              id: user.id,
+              password: user.password
+            }
           }
+        },
+        device: {
+          connect: !device.id ? undefined : { id: device.id },
+          create: !device.details ? undefined : { ...device.details, userId: createdUser.id }
         }
       },
-      device: {
-        connect: !device.id ? undefined : { id: device.id },
-        create: !device.details ? undefined : { ...device.details, userId: user.id }
-      }
-    },
-    select: { deviceId: true, userId: true }
+      select: { deviceId: true, userId: true }
+    })
+
+    return createdSession
   })
 }

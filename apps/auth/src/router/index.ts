@@ -16,7 +16,7 @@ export default async function (fastify: FastifyInstance) {
     async handler(req, rep) {
       const session = req.body
       const token = await createSession(session)
-      rep.send(token)
+      rep.status(201).send(token)
     }
   })
 }

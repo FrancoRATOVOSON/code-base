@@ -9,6 +9,6 @@ export async function createSession({
   if (!device.id && !device.details) throw Error('No device detais')
   const session = generateSession()
   const { deviceId, userId } = await saveSession(session, { user, device })
-  const userToken = generateToken(userId)
+  const userToken = generateToken({ id: userId })
   return { sessionId: session.id, deviceId, userId, userToken }
 }
