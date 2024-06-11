@@ -1,6 +1,6 @@
 // ts-check
 
-import { createCustomGroups, createConfig } from 'eslint-config'
+import { createCustomGroups, createConfig, perfectionistConfig } from 'eslint-config'
 
 const customConfig = createCustomGroups({
   groups: {
@@ -11,4 +11,6 @@ const customConfig = createCustomGroups({
   internals: ['#/**', '#utils/**', '#env']
 })
 
-export default createConfig(customConfig)
+const perfectionist = perfectionistConfig(customConfig)
+
+export default createConfig(perfectionist)

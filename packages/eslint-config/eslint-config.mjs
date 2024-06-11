@@ -1,28 +1,5 @@
 // @ts-check
 
-/**
- * @typedef {Object.<string,string[]>} CustomGroupObject
- */
-
-/**
- * @typedef {object} CustomImportConfig
- * @property {CustomGroupObject} groups
- * @property {string[]} internals
- */
-
-/**
- * @typedef {object} CustomImportGroup
- * @property {string[]} list
- * @property {Object.<string,string[]>} values
- * @property {Object.<string,string[]>} types
- */
-
-/**
- * @typedef {object} CustomConfigParams
- * @property {string[]} internals
- * @property {CustomImportGroup} groups
- */
-
 import { FlatCompat } from '@eslint/eslintrc'
 import eslint from '@eslint/js'
 import perfectionist from 'eslint-plugin-perfectionist'
@@ -35,13 +12,9 @@ const compat = new FlatCompat({
   baseDirectory: path.dirname(url.fileURLToPath(import.meta.url))
 })
 
-/**
- *
- * @param {CustomImportConfig} params
- * @returns {CustomConfigParams}
- */
-export function createCustomGroups(params) {
-  /** @type {CustomImportGroup} */
+/** @type {import("./types").CreateCustomGroupsFunction} */
+export const createCustomGroups = (params)  => {
+  /** @type {import("./types").CustomImportGroup} */
   const groups = { list: [], values: {}, types: {} }
   for (const [key, value] of Object.entries(params.groups)) {
     groups.list.push(key)
@@ -52,18 +25,9 @@ export function createCustomGroups(params) {
   return { groups, internals: params.internals }
 }
 
-/**
- *
- * @param {CustomConfigParams} params
- * @returns
- */
-export function createConfig({ groups = { list: [], types: {}, values: {} }, internals = [] }) {
-  return tseslint.config(
-    eslint.configs.recommended,
-    ...compat.extends('eslint-config-standard'),
-    ...tseslint.configs.recommended,
-    eslintPluginPrettierRecommended,
-    {
+/** @type {import("./types").PerfectionnistConfig} */
+export const perfectionistConfig = ({ groups = { list: [], types: {}, values: {} }, internals = [] }) => {
+  return {
       plugins: {
         perfectionist
       },
@@ -93,7 +57,7 @@ export function createConfig({ groups = { list: [], types: {}, values: {} }, int
           }
         ],
         'perfectionist/sort-imports': [
-          'warn',
+          'error',
           {
             type: 'natural',
             order: 'asc',
@@ -123,7 +87,17 @@ export function createConfig({ groups = { list: [], types: {}, values: {} }, int
           }
         ]
       }
-    },
+    }
+}
+
+/** @type {import("./types").CreateConfigFunction} */
+export const createConfig = (...rules)  => {
+  return tseslint.config(
+    eslint.configs.recommended,
+    ...compat.extends('eslint-config-standard'),
+    ...tseslint.configs.recommended,
+    ...rules,
+    eslintPluginPrettierRecommended,
     {
       rules: {
         'prettier/prettier': 'warn'
