@@ -1,5 +1,7 @@
 import { Linter } from 'eslint'
 
+import { ConfigType } from './src/eslint-types'
+
 export type CustomGroupObject = {
   [x: string]: string[]
 }
@@ -26,12 +28,20 @@ export type CustomGroupsParams = {
 
 export type ExtendedConfigs = Linter.FlatConfig<Linter.RulesRecord>
 
-export type CreateCustomGroupsFunction = (params:CustomImportConfig) => CustomGroups
+export type CreateCustomGroupsFunction = (params: CustomImportConfig) => CustomGroups
 
-export type CreateConfigFunction = (...params:ExtendedConfigs[]) => FlatConfig.ConfigArray
+export type CreateConfigFunction = (...params: ExtendedConfigs[]) => FlatConfig.ConfigArray
 
-export type PerfectionnistConfig = (params:CustomGroupsParams) => any
+export type PerfectionnistConfig = (params: CustomGroupsParams) => FlatConfig.ConfigArray
 
-export const createCustomGroups:CreateCustomGroupsFunction
-export const perfectionistConfig:PerfectionnistConfig
-export const createConfig:CreateConfigFunction
+export const createCustomGroups: CreateCustomGroupsFunction
+export const perfectionistConfig: PerfectionnistConfig
+export const createConfig: CreateConfigFunction
+
+export const nodeConfig: ConfigType
+
+export const functionalConfig: FlatConfig.ConfigArray
+export const jsonConfig: FlatConfig.ConfigArray
+export const securityConfig: FlatConfig.ConfigArray
+export const tailwindConfig: FlatConfig.ConfigArray
+export const unicornConfig: FlatConfig.ConfigArray

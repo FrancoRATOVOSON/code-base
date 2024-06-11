@@ -9,6 +9,10 @@
     }
   },
   "type": "module",
+  "files": [
+    "index.mjs",
+    "/src/*.mjs"
+  ],
   "peerDependencies": {
     "eslint": "^9.4.0"
   },
