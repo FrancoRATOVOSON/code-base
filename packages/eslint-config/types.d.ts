@@ -30,7 +30,7 @@ export type CreateCustomGroupsFunction = (params:CustomImportConfig) => CustomGr
 
 export type CreateConfigFunction = (...params:ExtendedConfigs[]) => FlatConfig.ConfigArray
 
-export type PerfectionnistConfig = (params:CustomGroupsParams) => FlatConfig.Config
+export type PerfectionnistConfig = (params:CustomGroupsParams) => any
 
 export const createCustomGroups:CreateCustomGroupsFunction
 export const perfectionistConfig:PerfectionnistConfig
