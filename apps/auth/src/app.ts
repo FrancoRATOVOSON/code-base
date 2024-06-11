@@ -31,9 +31,11 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform
 })
 
-app.register(fastifySwaggerUi, {
-  routePrefix: '/documentation'
-})
+if (env.NODE_ENV === 'development') {
+  app.register(fastifySwaggerUi, {
+    routePrefix: '/documentation'
+  })
+}
 
 app.register(auth)
 
