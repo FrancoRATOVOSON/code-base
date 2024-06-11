@@ -12,9 +12,12 @@ export async function createOrUpdateDevice(device: CreateSessionDeviceType) {
         update: device.details
       })
     else {
-      const dbDevice = await prisma.devices.findUnique({ where: { id: device.id } })
-      if (!dbDevice) throw new Error('Invalid device ID')
-      else sessionDevice = { id: dbDevice.id }
+      const databaseDevice = await prisma.devices.findUnique({ where: { id: device.id } })
+      if (databaseDevice) {
+        sessionDevice = { id: databaseDevice.id }
+      } else {
+        throw new Error('Invalid device ID')
+      }
     }
   } else {
     if (device.details) sessionDevice = await prisma.devices.create({ data: device.details })

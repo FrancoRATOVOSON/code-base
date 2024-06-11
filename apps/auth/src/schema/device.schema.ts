@@ -37,8 +37,8 @@ export const createSessionDeviceSchema = z
       .nullable()
   })
   .refine(
-    obj => {
-      return !(obj.id === null && obj.details === null)
+    object => {
+      return !(object.id === null && object.details === null)
     },
     { message: 'Device informations missing' }
   )

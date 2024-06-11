@@ -1,7 +1,7 @@
 import pino from 'pino'
 import pretty from 'pino-pretty'
 
-import env from './env'
+import environment from './env'
 
 const stream = pretty({
   colorize: true,
@@ -9,9 +9,9 @@ const stream = pretty({
   ignore: 'pid,hostname'
 })
 
-const loggerProd = pino(stream)
+const loggerProduction = pino(stream)
 
-const loggerDev = pino({
+const loggerDevelopment = pino({
   transport: {
     target: 'pino-pretty',
     options: {
@@ -21,6 +21,6 @@ const loggerDev = pino({
   }
 })
 
-const logger = env.NODE_ENV === 'production' ? loggerProd : loggerDev
+const logger = environment.NODE_ENV === 'production' ? loggerProduction : loggerDevelopment
 
 export default logger

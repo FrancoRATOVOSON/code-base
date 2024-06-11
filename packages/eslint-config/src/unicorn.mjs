@@ -2,11 +2,13 @@
 
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 
-export const unicornConfig = [
+/** @type {import("./eslint-types").ConfigType} */
+export const unicornConfig = rules => [
   eslintPluginUnicorn.configs['flat/recommended'],
   {
     rules: {
-      'unicorn/better-regex': 'warn'
+      'unicorn/better-regex': 'warn',
+      ...rules
     }
   }
 ]

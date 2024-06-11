@@ -11,10 +11,10 @@ import {
 
 import { auth } from './router'
 import { logger } from './utils/helpers'
-import env from './utils/helpers/env'
+import environment from './utils/helpers/env'
 
 const app = fastify({
-  logger: env.NODE_ENV === 'test' ? false : logger
+  logger: environment.NODE_ENV === 'test' ? false : logger
 })
 
 app.setValidatorCompiler(validatorCompiler)
@@ -31,7 +31,7 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform
 })
 
-if (env.NODE_ENV === 'development') {
+if (environment.NODE_ENV === 'development') {
   app.register(fastifySwaggerUi, {
     routePrefix: '/documentation'
   })

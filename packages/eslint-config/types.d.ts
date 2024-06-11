@@ -39,9 +39,9 @@ export const perfectionistConfig: PerfectionnistConfig
 export const createConfig: CreateConfigFunction
 
 export const nodeConfig: ConfigType
+export const unicornConfig: ConfigType
 
 export const functionalConfig: FlatConfig.ConfigArray
 export const jsonConfig: FlatConfig.ConfigArray
 export const securityConfig: FlatConfig.ConfigArray
 export const tailwindConfig: FlatConfig.ConfigArray
-export const unicornConfig: FlatConfig.ConfigArray

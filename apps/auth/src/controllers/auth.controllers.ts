@@ -6,7 +6,7 @@ export async function createSession({
   device,
   user
 }: CreateSessionParams): Promise<CreateSessionReturnType> {
-  if (!device.id && !device.details) throw Error('No device detais')
+  if (!device.id && !device.details) throw new Error('No device detais')
   const session = generateSession()
   const { id: deviceId } = await createOrUpdateDevice(device)
   const { userId } = await createNewSession(session, user, { deviceId })

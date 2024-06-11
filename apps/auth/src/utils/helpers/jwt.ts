@@ -1,10 +1,10 @@
 import { createSigner } from 'fast-jwt'
 
-import env from './env'
+import environment from './env'
 
 const tokenSigner = createSigner({
   algorithm: 'HS512',
-  key: env.TOKEN_SECRET_KEY,
+  key: environment.TOKEN_SECRET_KEY,
   expiresIn: 15 * 60 * 1000 // 15 minutes in milliseconds
 })
 

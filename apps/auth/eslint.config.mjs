@@ -21,7 +21,23 @@ const customConfig = createCustomGroups({
 })
 
 const perfectionist = perfectionistConfig(customConfig)
-const node = nodeConfig()
+const node = nodeConfig({
+  'n/no-missing-import': ['off']
+})
+
+const unicorn = unicornConfig({
+  'unicorn/prevent-abbreviations': [
+    'warn',
+    {
+      allowList: {
+        env: true,
+        lib: true,
+        params: true,
+        Params: true
+      }
+    }
+  ]
+})
 
 export default createConfig(
   perfectionist,
@@ -29,5 +45,5 @@ export default createConfig(
   ...jsonConfig,
   ...node,
   ...securityConfig,
-  ...unicornConfig
+  ...unicorn
 )

@@ -10,8 +10,9 @@ async function startApp() {
     await app.listen({ port })
   } catch (error) {
     app.log.error(error)
-    process.exit(1)
+    throw error
   }
 }
 
+// eslint-disable-next-line unicorn/prefer-top-level-await
 startApp()

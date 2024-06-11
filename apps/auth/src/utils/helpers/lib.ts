@@ -3,7 +3,6 @@ import crypto from 'node:crypto'
 
 import { GeneratedSessionType } from '../types'
 import { HttpErrorType, ResponseErrorType } from '../types/lib'
-
 import { signToken } from './jwt'
 
 export function generateSession(): GeneratedSessionType {
@@ -13,12 +12,11 @@ export function generateSession(): GeneratedSessionType {
   return { id, expirationDate }
 }
 
-export function generateToken<T extends string | Record<string, unknown>>(params: T) {
-  return signToken(params)
+export function generateToken<T extends string | Record<string, unknown>>(parameters: T) {
+  return signToken(parameters)
 }
 
-
-export function createResponseError(error:HttpErrorType, message: string): ResponseErrorType {
+export function createResponseError(error: HttpErrorType, message: string): ResponseErrorType {
   return {
     ...error,
     message

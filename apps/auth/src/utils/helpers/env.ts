@@ -21,8 +21,8 @@ const env = cleanEnv(
   },
   {
     reporter: ({ errors }) => {
-      for (const [envVar, error] of Object.entries(errors)) {
-        console.error(`Environment variable error - on ${envVar} [${error}]`)
+      for (const [envVariable, error] of Object.entries(errors)) {
+        console.error(`Environment variable error - on ${envVariable} [${error}]`)
       }
     }
   }
