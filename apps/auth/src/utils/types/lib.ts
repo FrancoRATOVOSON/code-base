@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { responseErrorSchema } from '#/schema'
 
-import { httpErrors } from '../helpers'
+import { httpErrors } from '../constants'
 
 export type ResponseErrorType = z.infer<typeof responseErrorSchema>
 

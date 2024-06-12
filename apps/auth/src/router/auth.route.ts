@@ -6,7 +6,8 @@ import { ZodError } from 'zod'
 
 import { createSession } from '#/controllers'
 import { createSessionBodySchema, createSessionResponseSchema, responseErrorSchema } from '#/schema'
-import { createResponseError, httpErrors, httpSuccess } from '#/utils/helpers'
+import { httpErrors, httpSuccess } from '#/utils/constants'
+import { createResponseError } from '#/utils/helpers'
 
 async function AuthRoute(fastify: FastifyInstance) {
   fastify.withTypeProvider<ZodTypeProvider>().route({
