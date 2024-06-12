@@ -1,11 +1,11 @@
 import { createNewSession, createOrUpdateDevice } from '#/services'
 import { generateSession, generateToken } from '#/utils/helpers'
-import { CreateSessionParams, CreateSessionReturnType } from '#/utils/types'
+import { CreateSessionParams, CreateSessionReturnType, DeepReadonly } from '#/utils/types'
 
 export async function createSession({
   device,
   user
-}: CreateSessionParams): Promise<CreateSessionReturnType> {
+}: DeepReadonly<CreateSessionParams>): Promise<CreateSessionReturnType> {
   if (!device.id && !device.details) throw new Error('No device detais')
   const session = generateSession()
   const { id: deviceId } = await createOrUpdateDevice(device)

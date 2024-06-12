@@ -39,11 +39,21 @@ const unicorn = unicornConfig({
   ]
 })
 
+const functional = functionalConfig()
+
 export default createConfig(
   perfectionist,
-  ...functionalConfig,
+  ...functional,
   ...jsonConfig,
   ...node,
   ...securityConfig,
-  ...unicorn
+  ...unicorn,
+  {
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname
+      }
+    }
+  }
 )

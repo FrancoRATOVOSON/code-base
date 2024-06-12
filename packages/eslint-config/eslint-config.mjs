@@ -18,6 +18,10 @@ export const createConfig = (...rules) => {
     ...compat.extends('eslint-config-standard'),
     ...tseslint.configs.recommended,
     ...rules,
+    // {
+    //   files: ['**/*.js', '**/*.mjs', '**/*.cjs', 'eslint.config.mjs'],
+    //   ...tseslint.configs.disableTypeChecked
+    // },
     eslintPluginPrettierRecommended,
     {
       rules: {

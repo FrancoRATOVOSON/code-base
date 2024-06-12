@@ -1,12 +1,12 @@
 import { prisma } from '#/database'
-import { CreateSessionDeviceType } from '#/utils/types'
+import { CreateSessionDeviceType, DeepReadonly } from '#/utils/types'
 
-export async function createOrUpdateDevice(device: CreateSessionDeviceType) {
-  let sessionDevice: { id: string }
+export async function createOrUpdateDevice(device: DeepReadonly<CreateSessionDeviceType>) {
+  if (!device.id && !device.details) throw new Error('Device informations missing')
 
   if (device.id) {
     if (device.details)
-      sessionDevice = await prisma.devices.upsert({
+      return await prisma.devices.upsert({
         where: { id: device.id },
         create: device.details,
         update: device.details
@@ -14,15 +14,13 @@ export async function createOrUpdateDevice(device: CreateSessionDeviceType) {
     else {
       const databaseDevice = await prisma.devices.findUnique({ where: { id: device.id } })
       if (databaseDevice) {
-        sessionDevice = { id: databaseDevice.id }
+        return { id: databaseDevice.id }
       } else {
         throw new Error('Invalid device ID')
       }
     }
   } else {
-    if (device.details) sessionDevice = await prisma.devices.create({ data: device.details })
+    if (device.details) return await prisma.devices.create({ data: device.details })
     else throw new Error('Device informations missing')
   }
-
-  return sessionDevice
 }

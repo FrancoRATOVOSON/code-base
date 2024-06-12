@@ -40,8 +40,8 @@ export const createConfig: CreateConfigFunction
 
 export const nodeConfig: ConfigType
 export const unicornConfig: ConfigType
+export const functionalConfig: ConfigType
 
-export const functionalConfig: FlatConfig.ConfigArray
 export const jsonConfig: FlatConfig.ConfigArray
 export const securityConfig: FlatConfig.ConfigArray
 export const tailwindConfig: FlatConfig.ConfigArray
