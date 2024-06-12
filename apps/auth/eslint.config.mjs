@@ -17,7 +17,7 @@ const customConfig = createCustomGroups({
     fastifyPlugins: ['@fastify/*'],
     fastifyCustom: ['fastify-*']
   },
-  internals: ['#/**', '#utils/**', '#env']
+  internals: ['#/**', '#utils/**']
 })
 
 const perfectionist = perfectionistConfig(customConfig)
