@@ -39,7 +39,11 @@ const unicorn = unicornConfig({
   ]
 })
 
-const functional = functionalConfig()
+const functional = functionalConfig({
+  'functional/no-expression-statements': ['off'],
+  'functional/functional-parameters': ['off'],
+  'functional/prefer-immutable-types': ['warn', { enforcement: 'Nonde' }]
+})
 
 export default createConfig(
   perfectionist,
