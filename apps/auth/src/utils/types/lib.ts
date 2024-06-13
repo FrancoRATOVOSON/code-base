@@ -14,3 +14,7 @@ export type HttpErrorCodes = keyof typeof httpErrors
 export type DeepReadonly<T> = {
   readonly [K in keyof T]: DeepReadonly<T[K]>
 }
+
+export interface IPrototype {
+  prototype: any
+}

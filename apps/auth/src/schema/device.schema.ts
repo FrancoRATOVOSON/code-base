@@ -2,6 +2,7 @@ import { DeviceClientType, DeviceType } from '@prisma/client'
 import z from 'zod'
 
 import { semverSchema } from './utils.schema'
+import { errorMessages } from '#/utils/constants'
 
 export const deviceDetailsSchema = z.object({
   os: z.object({
@@ -40,5 +41,5 @@ export const createSessionDeviceSchema = z
     object => {
       return !(object.id === null && object.details === null)
     },
-    { message: 'Device informations missing' }
+    { message: errorMessages.noDeviceDetails }
   )
