@@ -13,7 +13,10 @@ export const functionalConfig = rules => [
       }
     },
     rules: {
-      'functional/no-throw-statements': ['error', { allowInAsyncFunctions: false }],
+      'functional/no-throw-statements': [
+        'error',
+        { allowInAsyncFunctions: true }
+      ],
       ...rules
     }
   }

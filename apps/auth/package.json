@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "An authentication system",
   "main": "src/index.ts",
+  "type": "commonjs",
   "scripts": {
     "dev": "nodemon --exec node -r @swc-node/register --env-file=.env src/index.ts",
     "build": "tsc",

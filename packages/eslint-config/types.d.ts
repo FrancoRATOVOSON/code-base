@@ -28,11 +28,17 @@ export type CustomGroupsParams = {
 
 export type ExtendedConfigs = Linter.FlatConfig<Linter.RulesRecord>
 
-export type CreateCustomGroupsFunction = (params: CustomImportConfig) => CustomGroups
+export type CreateCustomGroupsFunction = (
+  params: CustomImportConfig
+) => CustomGroups
 
-export type CreateConfigFunction = (...params: ExtendedConfigs[]) => FlatConfig.ConfigArray
+export type CreateConfigFunction = (
+  ...params: ExtendedConfigs[]
+) => FlatConfig.ConfigArray
 
-export type PerfectionnistConfig = (params: CustomGroupsParams) => FlatConfig.ConfigArray
+export type PerfectionnistConfig = (
+  params: CustomGroupsParams
+) => FlatConfig.ConfigArray
 
 export const createCustomGroups: CreateCustomGroupsFunction
 export const perfectionistConfig: PerfectionnistConfig

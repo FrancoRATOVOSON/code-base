@@ -42,7 +42,7 @@ const unicorn = unicornConfig({
 const functional = functionalConfig({
   'functional/no-expression-statements': ['off'],
   'functional/functional-parameters': ['off'],
-  'functional/prefer-immutable-types': ['warn', { enforcement: 'Nonde' }]
+  'functional/prefer-immutable-types': ['warn', { enforcement: 'None' }]
 })
 
 export default createConfig(

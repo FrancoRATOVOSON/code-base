@@ -4,11 +4,11 @@ import { PayloadError } from '#/utils/errors'
 import { generateSession, generateToken } from '#/utils/helpers'
 import { CreateSessionParams } from '#/utils/types'
 
-export async function createSession({
-  device,
-  user
-}: CreateSessionParams) {
-  if (!device.id && !device.details) return new PayloadError(errorMessages.noDeviceDetails,{ fields: ['device.id','device.details'] })
+export async function createSession({ device, user }: CreateSessionParams) {
+  if (!device.id && !device.details)
+    throw new PayloadError(errorMessages.noDeviceDetails, {
+      fields: ['device.id', 'device.details']
+    })
   const session = generateSession()
   const { id: deviceId } = await createOrUpdateDevice(device)
   const { userId } = await createNewSession(session, user, { deviceId })

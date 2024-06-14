@@ -13,11 +13,16 @@ export function generateSession(): GeneratedSessionType {
   return { id, expirationDate }
 }
 
-export function generateToken<T extends string | Record<string, unknown>>(parameters: T) {
+export function generateToken<T extends string | Record<string, unknown>>(
+  parameters: T
+) {
   return signToken(parameters)
 }
 
-export function createResponseError(error: HttpErrorType, message: string): ResponseErrorType {
+export function createResponseError(
+  error: HttpErrorType,
+  message: string
+): ResponseErrorType {
   return {
     ...error,
     message

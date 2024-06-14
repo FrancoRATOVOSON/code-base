@@ -37,9 +37,3 @@ export const createSessionDeviceSchema = z
       })
       .nullable()
   })
-  .refine(
-    object => {
-      return !(object.id === null && object.details === null)
-    },
-    { message: errorMessages.noDeviceDetails }
-  )

@@ -7,7 +7,7 @@ class PayloadError extends CustomError<string[], {fields: string[]}> {
   }
 
   public getLogMessage: () => string = () => {
-    return `Missing fields on: [${this.payload.fields.join(' - ')}]`
+    return `PayloadError - Missing fields on: [${this.payload.fields.join(' - ')}]`
   }
 }
 

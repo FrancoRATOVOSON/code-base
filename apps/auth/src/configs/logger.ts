@@ -12,11 +12,12 @@ const stream = pretty({
 const loggerProduction = pino(stream)
 
 const loggerDevelopment = pino({
+  level: 'debug',
   transport: {
     target: 'pino-pretty',
     options: {
       colorize: true,
-      ignore: 'pid,hostname'
+      ignore: 'pid,hostname',
     }
   }
 })
