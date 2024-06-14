@@ -13,7 +13,7 @@ export function generateSession(): GeneratedSessionType {
   return { id, expirationDate }
 }
 
-export function generateToken<T extends string | Record<string, unknown>>(
+export function generateToken<T extends Record<string, unknown>>(
   parameters: T
 ) {
   return signToken(parameters)

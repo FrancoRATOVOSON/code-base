@@ -1,14 +1,14 @@
-import {IPrototype} from '#utils/types'
-
-class CustomError<T, U extends { [key: string]: NonNullable<T> }> extends Error implements IPrototype {
-  public payload:U
+class CustomError<
+  T,
+  U extends { [key: string]: NonNullable<T> }
+> extends Error {
   public getLogMessage: (() => string) | undefined
+  public payload: U
 
-  constructor(message:string,payloads:U) {
+  constructor(message: string, payloads: U) {
     super(message)
-    this.payload = {...payloads}
+    this.payload = { ...payloads }
   }
-  prototype: any
 }
 
 export default CustomError
