@@ -4,7 +4,6 @@ import {
   createCustomGroups,
   createConfig,
   perfectionistConfig,
-  functionalConfig,
   jsonConfig,
   nodeConfig,
   securityConfig,
@@ -39,16 +38,8 @@ const unicorn = unicornConfig({
   ]
 })
 
-const functional = functionalConfig({
-  'functional/no-expression-statements': ['off'],
-  'functional/functional-parameters': ['off'],
-  'functional/prefer-immutable-types': ['warn', { enforcement: 'None' }],
-  'functional/no-classes': ['off']
-})
-
 export default createConfig(
   perfectionist,
-  ...functional,
   ...jsonConfig,
   ...node,
   ...securityConfig,

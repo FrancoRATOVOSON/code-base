@@ -2,9 +2,10 @@ import z from 'zod'
 
 import { prisma } from '#/database'
 import { sessionUserSchema } from '#/schema'
+import { hashPassword } from '#/utils/helpers'
 import { GeneratedSessionType } from '#/utils/types'
 
-export function createNewSession(
+export async function createNewSession(
   { id, expirationDate }: GeneratedSessionType,
   user: z.infer<typeof sessionUserSchema>,
   { deviceId }: { deviceId: string }
@@ -23,6 +24,8 @@ export function createNewSession(
           create: {
             id: user.id,
             password: user.password
+              ? await hashPassword(user.password)
+              : undefined
           }
         }
       },

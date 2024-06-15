@@ -29,6 +29,9 @@ importers:
 
   apps/auth:
     dependencies:
+      '@fastify/cookie':
+        specifier: ^9.3.1
+        version: 9.3.1
       '@fastify/swagger':
         specifier: ^8.14.0
         version: 8.14.0
@@ -44,9 +47,6 @@ importers:
       envalid:
         specifier: ^8.0.0
         version: 8.0.0
-      fast-jwt:
-        specifier: ^4.0.1
-        version: 4.0.1
       fastify:
         specifier: ^4.27.0
         version: 4.27.0
@@ -183,6 +183,9 @@ packages:
 
   '@fastify/ajv-compiler@3.5.0':
     resolution: {integrity: sha512-ebbEtlI7dxXF5ziNdr05mOY8NnDiPB1XvAlLHctRt/Rc+C3LCOVW5imUVX+mhvUhnNzmPBHewUkOFgGlCxgdAA==}
+
+  '@fastify/cookie@9.3.1':
+    resolution: {integrity: sha512-h1NAEhB266+ZbZ0e9qUE6NnNR07i7DnNXWG9VbbZ8uC6O/hxHpl+Zoe5sw1yfdZ2U6XhToUGDnzQtWJdCaPwfg==}
 
   '@fastify/error@3.4.1':
     resolution: {integrity: sha512-wWSvph+29GR783IhmvdwWnN4bUxTD01Vm5Xad4i7i1VuAOItLvbPAb69sb0IQ2N57yprvhNIwAP5B6xfKTmjmQ==}
@@ -565,9 +568,6 @@ packages:
     resolution: {integrity: sha512-bMxMKAjg13EBSVscxTaYA4mRc5t1UAXa2kXiGTNfZ079HIWXEkKmkgFrh/nJqamaLSrXO5H4WFFkPEaLJWbs3A==}
     engines: {node: '>= 0.4'}
 
-  asn1.js@5.4.1:
-    resolution: {integrity: sha512-+I//4cYPccV8LdmBLiX8CYvf9Sp3vQsrqu2QNXRcrbiWvcx/UdlFiqUJJzxRQxgsZmvhXhn4cSKeSmoFjVdupA==}
-
   atomic-sleep@1.0.0:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
@@ -588,9 +588,6 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
-
-  bn.js@4.12.0:
-    resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -679,6 +676,10 @@ packages:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
 
+  cookie-signature@1.2.1:
+    resolution: {integrity: sha512-78KWk9T26NhzXtuL26cIJ8/qNHANyJ/ZYrmEXFzUmhZdjpBv+DlWlOANRTGBt48YcyslsLrj0bMLFTmXvLRCOw==}
+    engines: {node: '>=6.6.0'}
+
   cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
@@ -765,9 +766,6 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-
-  ecdsa-sig-formatter@1.0.11:
-    resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
 
   electron-to-chromium@1.4.798:
     resolution: {integrity: sha512-by9J2CiM9KPGj9qfp5U4FcPSbXJG7FNzqnYaY4WLzX+v2PHieVGmnsA4dxfpGE3QEC7JofpPZmn7Vn1B9NR2+Q==}
@@ -1042,10 +1040,6 @@ packages:
 
   fast-json-stringify@5.16.0:
     resolution: {integrity: sha512-A4bg6E15QrkuVO3f0SwIASgzMzR6XC4qTyTqhf3hYXy0iazbAdZKwkE+ox4WgzKyzM6ygvbdq3r134UjOaaAnA==}
-
-  fast-jwt@4.0.1:
-    resolution: {integrity: sha512-+mdSoH0QdOdFSbbGBctJu7L1yfXRtbmjbVJ4W/PEjyvivobDena0RKwihtBkOML1P+kUJ1QuewnH8u+mROsR1w==}
-    engines: {node: '>=16'}
 
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
@@ -1466,9 +1460,6 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimalistic-assert@1.0.1:
-    resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
-
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -1482,9 +1473,6 @@ packages:
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
-
-  mnemonist@0.39.8:
-    resolution: {integrity: sha512-vyWo2K3fjrUw8YeeZ1zF0fy6Mu59RHokURlld8ymdUPjMlD9EC9ov1/YPqTgqRvUN9nTr3Gqfz29LYAmu0PHPQ==}
 
   ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -1551,9 +1539,6 @@ packages:
   object.values@1.2.0:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
     engines: {node: '>= 0.4'}
-
-  obliterator@2.0.4:
-    resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -1831,9 +1816,6 @@ packages:
   safe-stable-stringify@2.4.3:
     resolution: {integrity: sha512-e2bDA2WJT0wxseVd4lsDP4+3ONX6HpMXQa1ZhFQ7SU+GjvORCmShbCMltrtIDfkYhVHrOcPtj+KhmDBdPdZD1g==}
     engines: {node: '>=10'}
-
-  safer-buffer@2.1.2:
-    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
   secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
@@ -2233,6 +2215,11 @@ snapshots:
       ajv: 8.16.0
       ajv-formats: 2.1.1(ajv@8.16.0)
       fast-uri: 2.3.1
+
+  '@fastify/cookie@9.3.1':
+    dependencies:
+      cookie-signature: 1.2.1
+      fastify-plugin: 4.5.1
 
   '@fastify/error@3.4.1': {}
 
@@ -2650,13 +2637,6 @@ snapshots:
       is-array-buffer: 3.0.4
       is-shared-array-buffer: 1.0.3
 
-  asn1.js@5.4.1:
-    dependencies:
-      bn.js: 4.12.0
-      inherits: 2.0.4
-      minimalistic-assert: 1.0.1
-      safer-buffer: 2.1.2
-
   atomic-sleep@1.0.0: {}
 
   available-typed-arrays@1.0.7:
@@ -2673,8 +2653,6 @@ snapshots:
   base64-js@1.5.1: {}
 
   binary-extensions@2.3.0: {}
-
-  bn.js@4.12.0: {}
 
   brace-expansion@1.1.11:
     dependencies:
@@ -2770,6 +2748,8 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
+  cookie-signature@1.2.1: {}
+
   cookie@0.6.0: {}
 
   core-js-compat@3.37.1:
@@ -2810,6 +2790,10 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
+  debug@4.3.5:
+    dependencies:
+      ms: 2.1.2
+
   debug@4.3.5(supports-color@5.5.0):
     dependencies:
       ms: 2.1.2
@@ -2847,10 +2831,6 @@ snapshots:
       esutils: 2.0.3
 
   eastasianwidth@0.2.0: {}
-
-  ecdsa-sig-formatter@1.0.11:
-    dependencies:
-      safe-buffer: 5.2.1
 
   electron-to-chromium@1.4.798: {}
 
@@ -3215,13 +3195,6 @@ snapshots:
       json-schema-ref-resolver: 1.0.1
       rfdc: 1.3.1
 
-  fast-jwt@4.0.1:
-    dependencies:
-      '@lukeed/ms': 2.0.2
-      asn1.js: 5.4.1
-      ecdsa-sig-formatter: 1.0.11
-      mnemonist: 0.39.8
-
   fast-levenshtein@2.0.6: {}
 
   fast-querystring@1.1.2:
@@ -3565,7 +3538,7 @@ snapshots:
 
   json-schema-resolver@2.0.0:
     dependencies:
-      debug: 4.3.5(supports-color@5.5.0)
+      debug: 4.3.5
       rfdc: 1.3.1
       uri-js: 4.4.1
     transitivePeerDependencies:
@@ -3629,8 +3602,6 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  minimalistic-assert@1.0.1: {}
-
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -3642,10 +3613,6 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@7.1.2: {}
-
-  mnemonist@0.39.8:
-    dependencies:
-      obliterator: 2.0.4
 
   ms@2.1.2: {}
 
@@ -3720,8 +3687,6 @@ snapshots:
       call-bind: 1.0.7
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
-
-  obliterator@2.0.4: {}
 
   on-exit-leak-free@2.1.2: {}
 
@@ -4000,8 +3965,6 @@ snapshots:
       regexp-tree: 0.1.27
 
   safe-stable-stringify@2.4.3: {}
-
-  safer-buffer@2.1.2: {}
 
   secure-json-parse@2.7.0: {}
 

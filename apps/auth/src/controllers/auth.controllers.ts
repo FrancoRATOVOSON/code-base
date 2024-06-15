@@ -1,7 +1,7 @@
 import { createNewSession, createOrUpdateDevice } from '#/services'
 import { errorMessages } from '#/utils/constants'
 import { PayloadError } from '#/utils/errors'
-import { generateSession, generateToken } from '#/utils/helpers'
+import { generateSession, signToken } from '#/utils/helpers'
 import { CreateSessionParams } from '#/utils/types'
 
 export async function createSession({ device, user }: CreateSessionParams) {
@@ -12,6 +12,6 @@ export async function createSession({ device, user }: CreateSessionParams) {
   const session = generateSession()
   const { id: deviceId } = await createOrUpdateDevice(device)
   const { userId } = await createNewSession(session, user, { deviceId })
-  const userToken = generateToken({ id: userId })
+  const userToken = signToken({ id: userId })
   return { sessionId: session.id, deviceId, userId, userToken }
 }
