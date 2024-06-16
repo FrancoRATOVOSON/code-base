@@ -15,3 +15,7 @@ export const createSessionResponseSchema = z.object({
   userId: z.string().uuid(),
   userToken: z.string()
 })
+
+export const cookieAuthSchema = z.object({
+  sessionId: sessionIdSchema
+})

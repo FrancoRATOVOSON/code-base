@@ -17,11 +17,12 @@ const loggerDevelopment = pino({
     target: 'pino-pretty',
     options: {
       colorize: true,
-      ignore: 'pid,hostname',
+      ignore: 'pid,hostname'
     }
   }
 })
 
-const logger = environment.NODE_ENV === 'production' ? loggerProduction : loggerDevelopment
+const logger =
+  environment.NODE_ENV === 'production' ? loggerProduction : loggerDevelopment
 
 export default logger

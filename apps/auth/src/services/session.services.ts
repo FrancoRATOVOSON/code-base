@@ -36,3 +36,13 @@ export async function createNewSession(
     select: { deviceId: true, userId: true }
   })
 }
+
+export function setSessionToInactive(sessionId: string, userId: string) {
+  return prisma.sessions.update({
+    where: { id: sessionId, userId },
+    data: {
+      isActive: false
+    },
+    select: { id: true }
+  })
+}

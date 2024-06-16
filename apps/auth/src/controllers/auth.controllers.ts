@@ -1,7 +1,11 @@
-import { createNewSession, createOrUpdateDevice } from '#/services'
+import {
+  createNewSession,
+  createOrUpdateDevice,
+  setSessionToInactive
+} from '#/services'
 import { errorMessages } from '#/utils/constants'
 import { PayloadError } from '#/utils/errors'
-import { generateSession, signToken } from '#/utils/helpers'
+import { generateSession, signToken, verifyToken } from '#/utils/helpers'
 import { CreateSessionParams } from '#/utils/types'
 
 export async function createSession({ device, user }: CreateSessionParams) {
@@ -14,4 +18,15 @@ export async function createSession({ device, user }: CreateSessionParams) {
   const { userId } = await createNewSession(session, user, { deviceId })
   const userToken = signToken({ id: userId })
   return { sessionId: session.id, deviceId, userId, userToken }
+}
+
+export async function disableSession(sessionId: string, token: string) {
+  const tokenPayload = verifyToken<{ id: string }>(token)
+
+  if (!tokenPayload.id)
+    throw new PayloadError(errorMessages.invalidTokenPayload, {
+      fields: ['id']
+    })
+
+  return setSessionToInactive(sessionId, tokenPayload.id)
 }

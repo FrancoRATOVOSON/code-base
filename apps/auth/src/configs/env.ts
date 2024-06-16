@@ -1,8 +1,9 @@
 import { cleanEnv, makeValidator, str } from 'envalid'
 
-const tokentKeyValidator = makeValidator<string>(key => {
+const secretKeyValidator = makeValidator<string>(key => {
   if (typeof key !== 'string') throw new Error('Token key must be a string')
-  if (key.length < 64) throw new Error('Token key must be at least 64 characters')
+  if (key.length < 64)
+    throw new Error('Token key must be at least 64 characters')
   return key
 })
 
@@ -15,14 +16,24 @@ const appPortValidator = makeValidator<number>(value => {
 const env = cleanEnv(
   process.env,
   {
-    TOKEN_SECRET_KEY: tokentKeyValidator({ desc: 'token key for jwt' }),
+    TOKEN_SECRET_KEY: secretKeyValidator({
+      desc: 'Secret key for jwt signing'
+    }),
+    COOKIE_SECRET_KEY: secretKeyValidator({
+      desc: 'Secret key for cookie signing'
+    }),
     PORT: appPortValidator(),
-    NODE_ENV: str({ choices: ['development', 'test', 'production'], default: 'development' })
+    NODE_ENV: str({
+      choices: ['development', 'test', 'production'],
+      default: 'development'
+    })
   },
   {
     reporter: ({ errors }) => {
       for (const [envVariable, error] of Object.entries(errors)) {
-        console.error(`Environment variable error - on ${envVariable} [${error}]`)
+        console.error(
+          `Environment variable error - on ${envVariable} [${error}]`
+        )
       }
     }
   }

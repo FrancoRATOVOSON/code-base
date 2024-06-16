@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 
+import fastifyCookie from '@fastify/cookie'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 
@@ -25,9 +26,27 @@ function createServer() {
         title: 'Session API',
         description: 'Authentication & Session managment service',
         version: '0.1.0'
+      },
+      components: {
+        securitySchemes: {
+          cookieAuth: {
+            type: 'apiKey',
+            in: 'cookie',
+            name: 'sessionId'
+          },
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'jwt'
+          }
+        }
       }
     },
     transform: jsonSchemaTransform
+  })
+
+  server.register(fastifyCookie, {
+    secret: env.COOKIE_SECRET_KEY
   })
 
   if (env.NODE_ENV === 'development') {

@@ -12,3 +12,5 @@ export const createErrorResponseSchema = (error: HttpErrorType) =>
     error: z.string().default(error.error),
     message: z.string()
   })
+
+export const emptyResponseSchema = z.null()

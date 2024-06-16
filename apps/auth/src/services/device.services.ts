@@ -25,6 +25,6 @@ export async function createOrUpdateDevice(device: CreateSessionDeviceType) {
     where: { id: device.id! },
     select: { id: true }
   })
-  if (!databaseDevice) throw new Error('Invalid device ID')
+  if (!databaseDevice) throw new Error(errorMessages.invalidDeviceID)
   return { id: databaseDevice.id }
 }
