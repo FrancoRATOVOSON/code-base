@@ -1,3 +1,3 @@
-import { start } from './app'
+import { startApp } from './app'
 
-start()
+startApp()

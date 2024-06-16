@@ -2,7 +2,6 @@ import { DeviceClientType, DeviceType } from '@prisma/client'
 import z from 'zod'
 
 import { semverSchema } from './utils.schema'
-import { errorMessages } from '#/utils/constants'
 
 export const deviceDetailsSchema = z.object({
   os: z.object({
@@ -24,16 +23,15 @@ export const deviceLocationSchema = z.object({
   country: z.string()
 })
 
-export const createSessionDeviceSchema = z
-  .object({
-    id: z.string().uuid().nullable(),
-    details: z
-      .object({
-        deviceType: z.nativeEnum(DeviceType),
-        client: z.nativeEnum(DeviceClientType),
-        appVersion: semverSchema,
-        deviceDetails: deviceDetailsSchema,
-        location: deviceLocationSchema
-      })
-      .nullable()
-  })
+export const createSessionDeviceSchema = z.object({
+  id: z.string().uuid().nullable(),
+  details: z
+    .object({
+      deviceType: z.nativeEnum(DeviceType),
+      client: z.nativeEnum(DeviceClientType),
+      appVersion: semverSchema,
+      deviceDetails: deviceDetailsSchema,
+      location: deviceLocationSchema
+    })
+    .nullable()
+})

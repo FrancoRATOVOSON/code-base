@@ -11,7 +11,9 @@ export type DeviceLocation = PrismaJson.DeviceLocation
 
 export type CreateSessionParams = z.infer<typeof createSessionBodySchema>
 
-export type CreateSessionReturnType = z.infer<typeof createSessionResponseSchema>
+export type CreateSessionReturnType = z.infer<
+  typeof createSessionResponseSchema
+>
 
 export type GeneratedSessionType = {
   id: string

@@ -37,7 +37,7 @@ export async function createNewSession(
   })
 }
 
-export function setSessionToInactive(sessionId: string, userId: string) {
+export function logoutSession(sessionId: string, userId: string) {
   return prisma.sessions.update({
     where: { id: sessionId, userId },
     data: {

@@ -46,7 +46,8 @@ function createServer() {
   })
 
   server.register(fastifyCookie, {
-    secret: env.COOKIE_SECRET_KEY
+    secret: env.COOKIE_SECRET_KEY,
+    hook: 'preHandler'
   })
 
   if (env.NODE_ENV === 'development') {
