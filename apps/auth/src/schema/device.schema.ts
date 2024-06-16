@@ -6,15 +6,16 @@ import { semverSchema } from './utils.schema'
 export const deviceDetailsSchema = z.object({
   os: z.object({
     name: z.string(),
-    version: semverSchema.nullable()
+    version: semverSchema.nullable().optional()
   }),
-  manufacturer: z.string().nullable(),
+  manufacturer: z.string().nullable().optional(),
   browser: z
     .object({
       name: z.string(),
       version: semverSchema
     })
     .nullable()
+    .optional()
 })
 
 export const deviceLocationSchema = z.object({
@@ -24,7 +25,7 @@ export const deviceLocationSchema = z.object({
 })
 
 export const createSessionDeviceSchema = z.object({
-  id: z.string().uuid().nullable(),
+  id: z.string().uuid().nullable().optional(),
   details: z
     .object({
       deviceType: z.nativeEnum(DeviceType),
@@ -34,4 +35,5 @@ export const createSessionDeviceSchema = z.object({
       location: deviceLocationSchema
     })
     .nullable()
+    .optional()
 })

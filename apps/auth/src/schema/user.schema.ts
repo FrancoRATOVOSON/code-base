@@ -1,4 +1,4 @@
-import { AuthProvider } from '@prisma/client'
+import { $Enums } from '@prisma/client'
 import z from 'zod'
 
 export const passwordSchema = z
@@ -20,9 +20,11 @@ export const passwordSchema = z
     message: 'Password cannot contain non-ASCII characters'
   })
 
+const authProviderSchema = z.nativeEnum($Enums.AuthProvider)
+
 export const sessionUserSchema = z.object({
   id: z.string().uuid(),
   login: z.string(),
-  password: passwordSchema.nullable(),
-  provider: z.nativeEnum(AuthProvider).nullable()
+  password: passwordSchema.nullable().optional(),
+  provider: authProviderSchema.nullable().optional()
 })

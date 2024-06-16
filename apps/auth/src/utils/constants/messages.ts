@@ -4,5 +4,6 @@ export const errorMessages = {
   unrecognizedSession: 'Unrecognized session',
   invalidTokenPayload: 'Missing field in token',
   noLoginProviderFound: 'Login provider missing',
-  cannotLoginWithPasswordAndProvider: 'Cannot login with password and provider'
+  cannotLoginWithPasswordAndProvider: 'Cannot login with password and provider',
+  invalidPayload: 'Payloads type error found'
 }

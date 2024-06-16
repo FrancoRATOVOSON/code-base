@@ -2,8 +2,9 @@ import { FastifyBaseLogger, FastifyError } from 'fastify'
 
 import { addDays } from 'date-fns'
 import crypto from 'node:crypto'
+import { ZodError } from 'zod'
 
-import { httpErrors } from '../constants'
+import { errorMessages, httpErrors } from '../constants'
 import { PayloadError, TokenError } from '../errors'
 import { GeneratedSessionType } from '../types'
 import { HttpErrorType, ResponseErrorType } from '../types/lib'
@@ -39,6 +40,16 @@ export function getResponseFromError(
 
   if (error instanceof TokenError)
     return createResponseError(httpErrors.unauthorized, errorMessage)
+
+  if (error instanceof ZodError) {
+    const errorFields = error.errors.map(zodError => zodError.path.join('.'))
+    const payloadError = new PayloadError(errorMessages.invalidPayload, {
+      fields: errorFields
+    })
+    logger.error(payloadError.getLogMessage())
+    logger.debug(error)
+    return createResponseError(httpErrors.badRequest, payloadError.message)
+  }
 
   logger.debug(error)
   return createResponseError(httpErrors.internalServerError, errorMessage)

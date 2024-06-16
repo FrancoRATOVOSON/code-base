@@ -28,7 +28,7 @@ const loginRoute: RouteType<{
   },
   attachValidation: true,
   async handler(request, rep) {
-    const { device, user } = request.body
+    const { device, user } = createSessionBodySchema.parse(request.body)
     if (!device.id && !device.details)
       throw new PayloadError(errorMessages.noDeviceDetails, {
         fields: ['device.id', 'device.details']
