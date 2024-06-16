@@ -2,6 +2,7 @@ import {
   RawReplyDefaultExpression,
   RawRequestDefaultExpression,
   RawServerDefault,
+  RouteGenericInterface,
   RouteOptions
 } from 'fastify'
 
@@ -21,11 +22,10 @@ export type HttpErrorType = HttpErrors[keyof HttpErrors]
 export type HttpErrorCodes = keyof typeof httpErrors
 
 export type RouteType<
-  RequestBodyType = null | undefined,
-  ResponseBodyType = null | undefined
+  RouteGeneric extends RouteGenericInterface = RouteGenericInterface
 > = RouteOptions<
   RawServerDefault,
   RawRequestDefaultExpression,
   RawReplyDefaultExpression,
-  { Body: RequestBodyType; Reply: ResponseBodyType }
+  RouteGeneric
 >

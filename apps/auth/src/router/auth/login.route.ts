@@ -13,7 +13,10 @@ import {
   RouteType
 } from '#/utils/types'
 
-const loginRoute: RouteType<CreateSessionParams, CreateSessionReturnType> = {
+const loginRoute: RouteType<{
+  Body: CreateSessionParams
+  Reply: CreateSessionReturnType
+}> = {
   method: 'POST',
   url: '/login',
   schema: {
