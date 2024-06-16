@@ -4,7 +4,7 @@ import { addDays } from 'date-fns'
 import crypto from 'node:crypto'
 
 import { httpErrors } from '../constants'
-import { PayloadError } from '../errors'
+import { PayloadError, TokenError } from '../errors'
 import { GeneratedSessionType } from '../types'
 import { HttpErrorType, ResponseErrorType } from '../types/lib'
 
@@ -37,5 +37,9 @@ export function getResponseFromError(
     return createResponseError(httpErrors.badRequest, errorMessage)
   }
 
+  if (error instanceof TokenError)
+    return createResponseError(httpErrors.unauthorized, errorMessage)
+
+  logger.debug(error)
   return createResponseError(httpErrors.internalServerError, errorMessage)
 }
