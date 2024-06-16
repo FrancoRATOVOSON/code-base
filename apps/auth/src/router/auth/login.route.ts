@@ -38,6 +38,10 @@ const loginRoute: RouteType<{
       throw new PayloadError(errorMessages.noLoginProviderFound, {
         fields: ['user.password', 'user.provider']
       })
+    if (user.password && user.provider)
+      throw new PayloadError(errorMessages.cannotLoginWithPasswordAndProvider, {
+        fields: ['user.password', 'user.provider']
+      })
 
     const session = generateSession()
     const { id: deviceId } = await createOrUpdateDevice(device)
