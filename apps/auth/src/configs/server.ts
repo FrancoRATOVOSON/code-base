@@ -10,6 +10,9 @@ import {
   jsonSchemaTransform
 } from 'fastify-type-provider-zod'
 
+// @ts-expect-error issue at https://github.com/scalar/scalar/issues/1906
+import fastifyApiReference from '@scalar/fastify-api-reference'
+
 import { env, logger } from '.'
 
 function createServer() {
@@ -53,6 +56,10 @@ function createServer() {
   if (env.NODE_ENV === 'development') {
     server.register(fastifySwaggerUi, {
       routePrefix: '/documentation'
+    })
+
+    server.register(fastifyApiReference, {
+      routePrefix: '/reference'
     })
   }
 
