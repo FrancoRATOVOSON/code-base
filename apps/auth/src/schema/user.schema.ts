@@ -1,6 +1,8 @@
 import { $Enums } from '@prisma/client'
 import z from 'zod'
 
+import { errorMessages } from '#/utils/constants'
+
 export const passwordSchema = z
   .string()
   .min(6, { message: 'Password must be at least 6 characters long' })
@@ -22,9 +24,23 @@ export const passwordSchema = z
 
 const authProviderSchema = z.nativeEnum($Enums.AuthProvider)
 
-export const sessionUserSchema = z.object({
-  id: z.string().uuid(),
-  login: z.string(),
-  password: passwordSchema.nullable().optional(),
-  provider: authProviderSchema.nullable().optional()
-})
+export const sessionUserSchema = z
+  .object({
+    id: z.string().uuid(),
+    login: z.string(),
+    password: passwordSchema.nullable().optional(),
+    provider: authProviderSchema.nullable().optional()
+  })
+  .superRefine((payload, context) => {
+    if (!payload.password && !payload.provider)
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: errorMessages.noLoginProviderFound
+      })
+
+    if (payload.password && payload.provider)
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: errorMessages.cannotLoginWithPasswordAndProvider
+      })
+  })

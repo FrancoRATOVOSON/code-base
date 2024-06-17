@@ -24,6 +24,7 @@ const logoutRoute: RouteType = {
 
   preHandler(request, rep, done) {
     const cookies = cookieAuthSchema.safeParse(request.cookies)
+
     if (!cookies.success) {
       const error = createResponseError(
         httpErrors.forbidden,
@@ -31,12 +32,21 @@ const logoutRoute: RouteType = {
       )
       return rep.status(error.code).send(error)
     }
+
     done()
   },
 
   async handler(request, rep) {
     const sessionId = request.cookies.sessionId
     const requestAuth = request.headers.authorization
+
+    if (!sessionId) {
+      const error = createResponseError(
+        httpErrors.forbidden,
+        errorMessages.unrecognizedSession
+      )
+      return rep.status(error.code).send(error)
+    }
 
     if (!requestAuth) {
       const error = createResponseError(
@@ -57,7 +67,7 @@ const logoutRoute: RouteType = {
         fields: ['id']
       })
 
-    await logoutSession(sessionId!, tokenPayload.id)
+    await logoutSession(sessionId, tokenPayload.id)
     rep.status(httpSuccess.ok)
   }
 }

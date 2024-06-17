@@ -4,8 +4,7 @@ import {
   createSessionResponseSchema
 } from '#/schema'
 import { createNewSession, createOrUpdateDevice } from '#/services'
-import { errorMessages, httpErrors, httpSuccess } from '#/utils/constants'
-import { PayloadError } from '#/utils/errors'
+import { httpErrors, httpSuccess } from '#/utils/constants'
 import { generateSession, signToken } from '#/utils/helpers'
 import {
   CreateSessionParams,
@@ -31,19 +30,6 @@ const loginRoute: RouteType<{
   async handler(request, rep) {
     if (request.validationError) throw request.validationError
     const { device, user } = request.body
-    if (!device.id && !device.details)
-      throw new PayloadError(errorMessages.noDeviceDetails, {
-        fields: ['device.id', 'device.details']
-      })
-
-    if (!user.password && !user.provider)
-      throw new PayloadError(errorMessages.noLoginProviderFound, {
-        fields: ['user.password', 'user.provider']
-      })
-    if (user.password && user.provider)
-      throw new PayloadError(errorMessages.cannotLoginWithPasswordAndProvider, {
-        fields: ['user.password', 'user.provider']
-      })
 
     const session = generateSession()
     const { id: deviceId } = await createOrUpdateDevice(device)
