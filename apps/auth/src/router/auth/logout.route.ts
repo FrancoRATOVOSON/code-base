@@ -21,9 +21,10 @@ const logoutRoute: RouteType = {
     }
   },
   attachValidation: true,
+
   preHandler(request, rep, done) {
-    const result = cookieAuthSchema.safeParse(request.cookies)
-    if (!result.success) {
+    const cookies = cookieAuthSchema.safeParse(request.cookies)
+    if (!cookies.success) {
       const error = createResponseError(
         httpErrors.forbidden,
         errorMessages.unrecognizedSession
@@ -32,6 +33,7 @@ const logoutRoute: RouteType = {
     }
     done()
   },
+
   async handler(request, rep) {
     const sessionId = request.cookies.sessionId
     const requestAuth = request.headers.authorization

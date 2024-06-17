@@ -27,8 +27,8 @@ const loginRoute: RouteType<{
     }
   },
   attachValidation: true,
+
   async handler(request, rep) {
-    // const { device, user } = createSessionBodySchema.parse(request.body)
     if (request.validationError) throw request.validationError
     const { device, user } = request.body
     if (!device.id && !device.details)

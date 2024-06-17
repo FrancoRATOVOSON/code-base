@@ -2,8 +2,13 @@ import { FastifyBaseLogger, FastifyError } from 'fastify'
 
 import { ZodError } from 'zod'
 
-import { errorMessages, httpErrors } from '../constants'
-import { PayloadError, TokenError } from '../errors'
+import { httpErrors } from '../constants'
+import {
+  PasswordError,
+  PayloadError,
+  PayloadTypeError,
+  TokenError
+} from '../errors'
 import { HttpErrorType, ResponseErrorType } from '../types'
 
 export function createResponseError(
@@ -14,6 +19,33 @@ export function createResponseError(
     ...error,
     message
   }
+}
+
+function handleZodError(error: ZodError) {
+  const errorFields = error.errors
+  const passwordErrors: Array<{ error: string }> = []
+  const typeErrors: Array<{ field: string; error: string }> = []
+
+  for (const errorItem of errorFields) {
+    if (
+      errorItem.path.includes('password') &&
+      errorItem.code !== 'invalid_type'
+    ) {
+      passwordErrors.push({ error: errorItem.message })
+      break
+    } else
+      typeErrors.push({
+        field: errorItem.path.join('.'),
+        error: errorItem.message
+      })
+  }
+
+  if (passwordErrors.length > 0)
+    return new PasswordError(passwordErrors[0].error)
+
+  return new PayloadTypeError(typeErrors[0].error, {
+    field: typeErrors[0].field
+  })
 }
 
 export function getResponseFromError(
@@ -32,19 +64,8 @@ export function getResponseFromError(
     return createResponseError(httpErrors.unauthorized, errorMessage)
 
   if (error instanceof ZodError) {
-    const errorFields = error.errors
-      .map(zodError => zodError.path.join('.'))
-      // eslint-disable-next-line unicorn/no-array-reduce
-      .reduce<string[]>((array, current) => {
-        if (array.at(-1) !== current) array.push(current)
-        return array
-      }, [])
-    const payloadError = new PayloadError(errorMessages.invalidPayload, {
-      fields: errorFields
-    })
-    logger.error(payloadError.getLogMessage())
-    logger.debug(error)
-    return createResponseError(httpErrors.badRequest, payloadError.message)
+    const currentError = handleZodError(error)
+    return createResponseError(httpErrors.badRequest, currentError.message)
   }
 
   logger.debug(error)
