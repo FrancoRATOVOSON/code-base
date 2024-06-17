@@ -19,7 +19,6 @@ function createServer() {
   const server = fastify({
     logger: env.NODE_ENV === 'test' ? false : logger
   })
-
   server.setValidatorCompiler(validatorCompiler)
   server.setSerializerCompiler(serializerCompiler)
 

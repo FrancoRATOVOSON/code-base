@@ -1,20 +1,10 @@
 import { FastifyBaseLogger, FastifyError } from 'fastify'
 
-import { addDays } from 'date-fns'
-import crypto from 'node:crypto'
 import { ZodError } from 'zod'
 
 import { errorMessages, httpErrors } from '../constants'
 import { PayloadError, TokenError } from '../errors'
-import { GeneratedSessionType } from '../types'
-import { HttpErrorType, ResponseErrorType } from '../types/lib'
-
-export function generateSession(): GeneratedSessionType {
-  const id = crypto.randomBytes(128).toString('base64')
-  const expirationDate = addDays(Date.now(), 7)
-
-  return { id, expirationDate }
-}
+import { HttpErrorType, ResponseErrorType } from '../types'
 
 export function createResponseError(
   error: HttpErrorType,
@@ -42,7 +32,13 @@ export function getResponseFromError(
     return createResponseError(httpErrors.unauthorized, errorMessage)
 
   if (error instanceof ZodError) {
-    const errorFields = error.errors.map(zodError => zodError.path.join('.'))
+    const errorFields = error.errors
+      .map(zodError => zodError.path.join('.'))
+      // eslint-disable-next-line unicorn/no-array-reduce
+      .reduce<string[]>((array, current) => {
+        if (array.at(-1) !== current) array.push(current)
+        return array
+      }, [])
     const payloadError = new PayloadError(errorMessages.invalidPayload, {
       fields: errorFields
     })

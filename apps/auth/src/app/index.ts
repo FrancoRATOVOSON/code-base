@@ -5,7 +5,7 @@ import { getResponseFromError } from '#/utils/helpers'
 function createApp() {
   server.setErrorHandler(function (error, _request, rep) {
     const responseError = getResponseFromError(server.log, error)
-    return rep.status(responseError.code).send(responseError)
+    rep.status(responseError.code).send(responseError)
   })
 
   server.register(router)

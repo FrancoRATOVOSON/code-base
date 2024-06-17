@@ -6,6 +6,11 @@ import nodePlugin from 'eslint-plugin-n'
 export const nodeConfig = rules => [
   nodePlugin.configs['flat/recommended'],
   {
+    settings: {
+      node: {
+        version: '>=18.20.0'
+      }
+    },
     rules: {
       'n/exports-style': ['error', 'module.exports'],
       'n/no-unpublished-import': ['warn', { allowModules: ['eslint-config'] }],
