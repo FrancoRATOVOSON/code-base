@@ -29,3 +29,5 @@ export type RouteType<
   RawReplyDefaultExpression,
   RouteGeneric
 >
+
+export type DoneFunctionType = (error?: Error) => void
