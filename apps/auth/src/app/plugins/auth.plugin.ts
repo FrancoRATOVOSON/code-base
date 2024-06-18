@@ -1,9 +1,13 @@
 import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify'
 
-import auth from '@fastify/auth'
+import fastifyAuth from '@fastify/auth'
 import fastifyBearerAuth from '@fastify/bearer-auth'
 
+import fp from 'fastify-plugin'
+
 import { env } from '#/configs'
+import { cookieAuthSchema } from '#/schema'
+import { errorMessages } from '#/utils/constants'
 import { verifyToken } from '#/utils/helpers'
 import { DoneFunctionType } from '#/utils/types'
 
@@ -18,22 +22,8 @@ declare module 'fastify' {
 }
 
 const authPlugin: FastifyPluginAsync = async fastify => {
-  fastify.decorate(
-    'verifySession',
-    function (
-      request: FastifyRequest,
-      reply: FastifyReply,
-      done: DoneFunctionType
-    ) {
-      const requestCookies = request.headers.cookie
-      if (!requestCookies) return done(new Error('No session'))
-      const sessionCookies = fastify.parseCookie(requestCookies)
-      if (!sessionCookies.sessionId) return done(new Error('No session'))
-      return done()
-    }
-  )
+  await fastify.register(fastifyAuth)
 
-  fastify.register(auth)
   fastify.register(fastifyBearerAuth, {
     keys: [env.TOKEN_SECRET_KEY],
     addHook: false,
@@ -45,6 +35,24 @@ const authPlugin: FastifyPluginAsync = async fastify => {
       return verifyToken(token)
     }
   })
+
+  fastify.decorate(
+    'verifySession',
+    function (
+      request: FastifyRequest,
+      reply: FastifyReply,
+      done: DoneFunctionType
+    ) {
+      const requestCookies = request.headers.cookie
+      if (!requestCookies)
+        return done(new Error(errorMessages.unrecognizedSession))
+      const sessionCookies = fastify.parseCookie(requestCookies)
+      const parseResult = cookieAuthSchema.safeParse(sessionCookies)
+      if (parseResult.error)
+        return done(new Error(errorMessages.unrecognizedSession))
+      return done()
+    }
+  )
 }
 
-export default authPlugin
+export default fp(authPlugin)

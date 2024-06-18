@@ -1,19 +1,15 @@
-import {
-  cookieAuthSchema,
-  createErrorResponseSchema,
-  emptyResponseSchema
-} from '#/schema'
+import { createErrorResponseSchema, emptyResponseSchema } from '#/schema'
 import { logoutSession } from '#/services'
 import { errorMessages, httpErrors, httpSuccess } from '#/utils/constants'
 import { PayloadError } from '#/utils/errors'
 import { createResponseError, verifyToken } from '#/utils/helpers'
-import { RouteType } from '#/utils/types'
+import { CreateRouteObjectFunctionType } from '#/utils/types'
 
-const logoutRoute: RouteType = {
+const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
   method: 'POST',
   url: '/logout',
   schema: {
-    security: [{ cookieAuth: [] }, { bearerAuth: [] }],
+    security: [{ cookieAuth: [], bearerAuth: [] }],
     response: {
       200: emptyResponseSchema.describe('Session destroyed'),
       400: createErrorResponseSchema(httpErrors.badRequest),
@@ -22,19 +18,30 @@ const logoutRoute: RouteType = {
   },
   attachValidation: true,
 
-  preHandler(request, rep, done) {
-    const cookies = cookieAuthSchema.safeParse(request.cookies)
-
-    if (!cookies.success) {
-      const error = createResponseError(
-        httpErrors.forbidden,
-        errorMessages.unrecognizedSession
-      )
-      return rep.status(error.code).send(error)
+  onRequest: fastify.auth(
+    [
+      fastify.verifySession,
+      ...(fastify.verifyBearerAuth ? [fastify.verifyBearerAuth] : [])
+    ],
+    {
+      relation: 'and',
+      run: 'all'
     }
+  ),
 
-    done()
-  },
+  // preHandler(request, rep, done) {
+  //   const cookies = cookieAuthSchema.safeParse(request.cookies)
+
+  //   if (!cookies.success) {
+  //     const error = createResponseError(
+  //       httpErrors.forbidden,
+  //       errorMessages.unrecognizedSession
+  //     )
+  //     return rep.status(error.code).send(error)
+  //   }
+
+  //   done()
+  // },
 
   async handler(request, rep) {
     const sessionId = request.cookies.sessionId
@@ -70,6 +77,6 @@ const logoutRoute: RouteType = {
     await logoutSession(sessionId, tokenPayload.id)
     rep.status(httpSuccess.ok)
   }
-}
+})
 
-export default logoutRoute
+export default createLogoutRoute

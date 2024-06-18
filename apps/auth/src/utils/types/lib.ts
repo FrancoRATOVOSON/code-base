@@ -1,4 +1,5 @@
 import {
+  FastifyInstance,
   RawReplyDefaultExpression,
   RawRequestDefaultExpression,
   RawServerDefault,
@@ -29,5 +30,9 @@ export type RouteType<
   RawReplyDefaultExpression,
   RouteGeneric
 >
+
+export type CreateRouteObjectFunctionType<
+  RouteGeneric extends RouteGenericInterface = RouteGenericInterface
+> = (fastify: FastifyInstance) => RouteType<RouteGeneric>
 
 export type DoneFunctionType = (error?: Error) => void

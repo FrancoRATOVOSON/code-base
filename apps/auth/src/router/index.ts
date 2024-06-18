@@ -2,14 +2,9 @@ import { FastifyInstance } from 'fastify'
 
 import auth from './auth'
 
-async function router(
-  fastify: FastifyInstance,
-  _: unknown,
-  done: VoidFunction
-) {
+async function router(fastify: FastifyInstance) {
   fastify.register(auth, { prefix: 'auth' })
-
-  done()
 }
 
+// export default fp(router)
 export default router
