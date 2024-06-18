@@ -29,6 +29,12 @@ importers:
 
   apps/auth:
     dependencies:
+      '@fastify/auth':
+        specifier: ^4.6.1
+        version: 4.6.1
+      '@fastify/bearer-auth':
+        specifier: ^9.4.0
+        version: 9.4.0
       '@fastify/cookie':
         specifier: ^9.3.1
         version: 9.3.1
@@ -186,6 +192,12 @@ packages:
 
   '@fastify/ajv-compiler@3.5.0':
     resolution: {integrity: sha512-ebbEtlI7dxXF5ziNdr05mOY8NnDiPB1XvAlLHctRt/Rc+C3LCOVW5imUVX+mhvUhnNzmPBHewUkOFgGlCxgdAA==}
+
+  '@fastify/auth@4.6.1':
+    resolution: {integrity: sha512-J/UkZw6EYUX7aXu78YLV1uE1ESbHsGNKxyO+H82ixdC3AnzBT8qeBI6K19mqVHfJTICy5m9uspj7PjC7EvZQ/A==}
+
+  '@fastify/bearer-auth@9.4.0':
+    resolution: {integrity: sha512-+xn8UCKhJiBP3SsbCjzhfq+Dtf/pl1BDVrgb0/o6WcgNDUZ+bcEZnJ0P2e6FQEtE2nMYonLD/aVa9Ku8N9Cfbw==}
 
   '@fastify/cookie@9.3.1':
     resolution: {integrity: sha512-h1NAEhB266+ZbZ0e9qUE6NnNR07i7DnNXWG9VbbZ8uC6O/hxHpl+Zoe5sw1yfdZ2U6XhToUGDnzQtWJdCaPwfg==}
@@ -2222,6 +2234,16 @@ snapshots:
       ajv: 8.16.0
       ajv-formats: 2.1.1(ajv@8.16.0)
       fast-uri: 2.3.1
+
+  '@fastify/auth@4.6.1':
+    dependencies:
+      fastify-plugin: 4.5.1
+      reusify: 1.0.4
+
+  '@fastify/bearer-auth@9.4.0':
+    dependencies:
+      '@fastify/error': 3.4.1
+      fastify-plugin: 4.5.1
 
   '@fastify/cookie@9.3.1':
     dependencies:
