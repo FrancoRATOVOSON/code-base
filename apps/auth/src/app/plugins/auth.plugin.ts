@@ -22,7 +22,7 @@ declare module 'fastify' {
 }
 
 const authPlugin: FastifyPluginAsync = async fastify => {
-  await fastify.register(fastifyAuth)
+  fastify.register(fastifyAuth)
 
   fastify.register(fastifyBearerAuth, {
     keys: [env.TOKEN_SECRET_KEY],

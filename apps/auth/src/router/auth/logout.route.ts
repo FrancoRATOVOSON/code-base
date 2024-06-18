@@ -29,20 +29,6 @@ const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
     }
   ),
 
-  // preHandler(request, rep, done) {
-  //   const cookies = cookieAuthSchema.safeParse(request.cookies)
-
-  //   if (!cookies.success) {
-  //     const error = createResponseError(
-  //       httpErrors.forbidden,
-  //       errorMessages.unrecognizedSession
-  //     )
-  //     return rep.status(error.code).send(error)
-  //   }
-
-  //   done()
-  // },
-
   async handler(request, rep) {
     const sessionId = request.cookies.sessionId
     const requestAuth = request.headers.authorization

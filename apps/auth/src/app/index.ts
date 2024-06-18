@@ -4,21 +4,21 @@ import { getResponseFromError } from '#/utils/helpers'
 
 import { authPlugin } from './plugins'
 
-async function createApp() {
+function createApp() {
   server.setErrorHandler(function (error, _request, rep) {
     const responseError = getResponseFromError(server.log, error)
     rep.status(responseError.code).send(responseError)
   })
 
-  server.register(authPlugin).after(() => server.register(router))
-  // server.register(router)
+  server.register(authPlugin)
+  server.register(router)
 
   return server
 }
 
 export async function startApp() {
   const port = env.PORT
-  const app = await createApp()
+  const app = createApp()
 
   try {
     await app.ready()
