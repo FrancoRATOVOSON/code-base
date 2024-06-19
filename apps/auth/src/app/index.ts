@@ -2,6 +2,7 @@ import { server, env } from '#/configs'
 import router from '#/router'
 import { getResponseFromError } from '#/utils/helpers'
 
+import { authDecorator } from './decorators'
 import { authPlugin } from './plugins'
 
 function createApp() {
@@ -11,6 +12,7 @@ function createApp() {
   })
 
   server.register(authPlugin)
+  server.register(authDecorator)
   server.register(router)
 
   return server

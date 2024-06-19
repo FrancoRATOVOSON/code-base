@@ -11,7 +11,7 @@ type TokenErrorType = keyof typeof tokenErrors
 
 class TokenError extends CustomError<string, { token: string }> {
   public getLogMessage: () => string = () => {
-    return `TokenError - ${this.message} on ${this.payload.token}`
+    return `TokenError - ${this.message}`
   }
 
   constructor(error: TokenErrorType, token: string) {

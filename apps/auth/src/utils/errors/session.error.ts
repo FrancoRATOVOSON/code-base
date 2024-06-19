@@ -1,19 +1,22 @@
+import { AuthenticationErrorCode, AuthenticationErrorType } from '../types'
 import CustomError from './custom.error'
-
-const sessionErrors = [
-  'No cookie header found',
-  'No session field in cookies'
-] as const
 
 const defaultMessage = 'Authetication required'
 
-class SessionError extends CustomError<1 | 2, { code: 1 | 2 }> {
-  public getLogMessage: (() => string) | undefined = () => {
-    return `SessionError - ${sessionErrors[this.payload.code - 1]}`
+class SessionError<
+  ErrorType extends AuthenticationErrorType = 'session'
+> extends CustomError<
+  AuthenticationErrorCode<ErrorType>,
+  { log: AuthenticationErrorCode<ErrorType> }
+> {
+  public getLogMessage: () => string = () => {
+    return `SessionError - ${this.payload.log}`
   }
 
-  constructor(code: 1 | 2) {
-    super(defaultMessage, { code })
+  constructor(log: AuthenticationErrorCode<ErrorType>) {
+    super(defaultMessage, {
+      log
+    })
   }
 }
 

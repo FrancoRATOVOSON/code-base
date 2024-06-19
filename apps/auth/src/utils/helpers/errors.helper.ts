@@ -2,7 +2,7 @@ import { FastifyBaseLogger, FastifyError } from 'fastify'
 
 import { ZodError } from 'zod'
 
-import { httpErrors } from '../constants'
+import { authenticationErrors, httpErrors } from '../constants'
 import {
   PasswordError,
   PayloadError,
@@ -61,16 +61,23 @@ export function getResponseFromError(
     return createResponseError(httpErrors.badRequest, errorMessage)
   }
 
-  if (error instanceof TokenError)
-    return createResponseError(httpErrors.unauthorized, errorMessage)
+  if (error instanceof TokenError) {
+    logger.debug(error.getLogMessage())
+    const currentError = new SessionError<'token'>(
+      authenticationErrors.token.wrongAuthorizationFormat
+    )
+    return createResponseError(httpErrors.unauthorized, currentError.message)
+  }
 
   if (error instanceof ZodError) {
     const currentError = handleZodError(error)
     return createResponseError(httpErrors.badRequest, currentError.message)
   }
 
-  if (error instanceof SessionError)
+  if (error instanceof SessionError) {
+    logger.debug(error.getLogMessage())
     return createResponseError(httpErrors.unauthorized, error.message)
+  }
 
   logger.debug(error)
   return createResponseError(httpErrors.internalServerError, errorMessage)

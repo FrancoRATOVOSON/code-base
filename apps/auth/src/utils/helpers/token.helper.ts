@@ -54,8 +54,7 @@ export function signToken(
 
 export function verifyToken<T = unknown>(
   token: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  validatePayload?: (payload: any) => T
+  validatePayload?: (payload: unknown) => T
 ): T {
   const [headerB64, payloadB64, signature] = token.split('.')
 

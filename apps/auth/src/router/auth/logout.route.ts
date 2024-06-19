@@ -18,16 +18,10 @@ const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
   },
   attachValidation: true,
 
-  onRequest: fastify.auth(
-    [
-      fastify.verifySession,
-      ...(fastify.verifyBearerAuth ? [fastify.verifyBearerAuth] : [])
-    ],
-    {
-      relation: 'and',
-      run: 'all'
-    }
-  ),
+  onRequest: fastify.auth([fastify.verifySession, fastify.verifyToken], {
+    relation: 'and',
+    run: 'all'
+  }),
 
   async handler(request, rep) {
     const sessionId = request.cookies.sessionId
