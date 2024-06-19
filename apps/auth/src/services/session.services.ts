@@ -1,16 +1,17 @@
+import { PrismaClient } from '@prisma/client'
 import z from 'zod'
 
-import { prisma } from '#/database'
 import { sessionUserSchema } from '#/schema'
 import { hashPassword } from '#/utils/helpers'
 import { GeneratedSessionType } from '#/utils/types'
 
 export async function createNewSession(
+  client: PrismaClient,
   { id, expirationDate }: GeneratedSessionType,
   user: z.infer<typeof sessionUserSchema>,
   { deviceId }: { deviceId: string }
 ) {
-  return prisma.sessions.create({
+  return client.sessions.create({
     data: {
       id,
       expirationDate,
@@ -37,15 +38,19 @@ export async function createNewSession(
   })
 }
 
-export function getSessionOwner(id: string) {
-  return prisma.sessions.findUnique({
+export function getSessionOwner(client: PrismaClient, id: string) {
+  return client.sessions.findUnique({
     where: { id },
     select: { userId: true }
   })
 }
 
-export function logoutSession(sessionId: string, userId: string) {
-  return prisma.sessions.update({
+export function logoutSession(
+  client: PrismaClient,
+  sessionId: string,
+  userId: string
+) {
+  return client.sessions.update({
     where: { id: sessionId, userId },
     data: {
       isActive: false

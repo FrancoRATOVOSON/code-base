@@ -7,15 +7,15 @@ import { createNewSession, createOrUpdateDevice } from '#/services'
 import { httpErrors, httpSuccess } from '#/utils/constants'
 import { generateSession, signToken } from '#/utils/helpers'
 import {
+  CreateRouteObjectFunctionType,
   CreateSessionParams,
-  CreateSessionReturnType,
-  RouteType
+  CreateSessionReturnType
 } from '#/utils/types'
 
-const loginRoute: RouteType<{
+const createLoginRoute: CreateRouteObjectFunctionType<{
   Body: CreateSessionParams
   Reply: CreateSessionReturnType
-}> = {
+}> = fastify => ({
   method: 'POST',
   url: '/login',
   schema: {
@@ -32,14 +32,16 @@ const loginRoute: RouteType<{
     const { device, user } = request.body
 
     const session = generateSession()
-    const { id: deviceId } = await createOrUpdateDevice(device)
-    const { userId } = await createNewSession(session, user, { deviceId })
+    const { id: deviceId } = await createOrUpdateDevice(fastify.prisma, device)
+    const { userId } = await createNewSession(fastify.prisma, session, user, {
+      deviceId
+    })
     const userToken = signToken({ id: userId })
 
     rep
       .status(httpSuccess.created)
       .send({ sessionId: session.id, deviceId, userId, userToken })
   }
-}
+})
 
-export default loginRoute
+export default createLoginRoute

@@ -34,7 +34,7 @@ const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
         fields: ['id']
       })
 
-    const sessionUser = await getSessionOwner(sessionId)
+    const sessionUser = await getSessionOwner(fastify.prisma, sessionId)
 
     if (!sessionUser || sessionUser.userId !== tokenPayload.id) {
       const error = createResponseError(
@@ -44,7 +44,7 @@ const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
       return rep.status(error.code).send(error)
     }
 
-    await logoutSession(sessionId, tokenPayload.id)
+    await logoutSession(fastify.prisma, sessionId, tokenPayload.id)
     rep.status(httpSuccess.ok)
   }
 })
