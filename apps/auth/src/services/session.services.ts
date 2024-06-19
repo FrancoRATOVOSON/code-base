@@ -37,6 +37,13 @@ export async function createNewSession(
   })
 }
 
+export function getSessionOwner(id: string) {
+  return prisma.sessions.findUnique({
+    where: { id },
+    select: { userId: true }
+  })
+}
+
 export function logoutSession(sessionId: string, userId: string) {
   return prisma.sessions.update({
     where: { id: sessionId, userId },

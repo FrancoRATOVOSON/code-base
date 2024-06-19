@@ -1,5 +1,5 @@
 import { createErrorResponseSchema, emptyResponseSchema } from '#/schema'
-import { logoutSession } from '#/services'
+import { getSessionOwner, logoutSession } from '#/services'
 import { errorMessages, httpErrors, httpSuccess } from '#/utils/constants'
 import { PayloadError } from '#/utils/errors'
 import { createResponseError, verifyToken } from '#/utils/helpers'
@@ -24,35 +24,25 @@ const createLogoutRoute: CreateRouteObjectFunctionType = fastify => ({
   }),
 
   async handler(request, rep) {
-    const sessionId = request.cookies.sessionId
-    const requestAuth = request.headers.authorization
+    const sessionId = request.cookies.sessionId!
+    const requestAuth = request.headers.authorization!
 
-    if (!sessionId) {
+    const token = requestAuth.split(' ')[1]
+    const tokenPayload = verifyToken<{ id: string }>(token)
+    if (!tokenPayload.id)
+      throw new PayloadError(errorMessages.invalidTokenPayload, {
+        fields: ['id']
+      })
+
+    const sessionUser = await getSessionOwner(sessionId)
+
+    if (!sessionUser || sessionUser.userId !== tokenPayload.id) {
       const error = createResponseError(
         httpErrors.forbidden,
         errorMessages.unrecognizedSession
       )
       return rep.status(error.code).send(error)
     }
-
-    if (!requestAuth) {
-      const error = createResponseError(
-        httpErrors.forbidden,
-        'No request authorization'
-      )
-      return rep.status(error.code).send(error)
-    }
-
-    const token = requestAuth.split(' ')[1]
-    if (!token) {
-      const error = createResponseError(httpErrors.forbidden, 'No token')
-      return rep.status(error.code).send(error)
-    }
-    const tokenPayload = verifyToken<{ id: string }>(token)
-    if (!tokenPayload.id)
-      throw new PayloadError(errorMessages.invalidTokenPayload, {
-        fields: ['id']
-      })
 
     await logoutSession(sessionId, tokenPayload.id)
     rep.status(httpSuccess.ok)

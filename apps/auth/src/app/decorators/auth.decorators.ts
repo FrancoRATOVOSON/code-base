@@ -60,7 +60,8 @@ const authDecorator: FastifyPluginAsync = async fastify => {
         )
 
       try {
-        return verifyToken(token)
+        verifyToken(token)
+        done()
       } catch (error) {
         if (error instanceof TokenError) return done(error)
         fastify.log.debug(error)

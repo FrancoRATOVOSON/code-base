@@ -1,6 +1,5 @@
 import fastify from 'fastify'
 
-import fastifyCookie, { FastifyCookieOptions } from '@fastify/cookie'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 
@@ -46,12 +45,6 @@ function createServer() {
     },
     transform: jsonSchemaTransform
   })
-
-  server.register(fastifyCookie, {
-    secret: env.COOKIE_SECRET_KEY,
-    hook: 'onRequest',
-    parseOptions: {}
-  } as FastifyCookieOptions)
 
   if (env.NODE_ENV === 'development') {
     server.register(fastifySwaggerUi, {
