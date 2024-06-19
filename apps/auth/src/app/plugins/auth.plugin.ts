@@ -7,7 +7,7 @@ import fp from 'fastify-plugin'
 
 import { env } from '#/configs'
 import { cookieAuthSchema } from '#/schema'
-import { errorMessages } from '#/utils/constants'
+import { SessionError } from '#/utils/errors'
 import { verifyToken } from '#/utils/helpers'
 import { DoneFunctionType } from '#/utils/types'
 
@@ -44,12 +44,10 @@ const authPlugin: FastifyPluginAsync = async fastify => {
       done: DoneFunctionType
     ) {
       const requestCookies = request.headers.cookie
-      if (!requestCookies)
-        return done(new Error(errorMessages.unrecognizedSession))
+      if (!requestCookies) return done(new SessionError(1))
       const sessionCookies = fastify.parseCookie(requestCookies)
       const parseResult = cookieAuthSchema.safeParse(sessionCookies)
-      if (parseResult.error)
-        return done(new Error(errorMessages.unrecognizedSession))
+      if (parseResult.error) return done(new SessionError(2))
       return done()
     }
   )

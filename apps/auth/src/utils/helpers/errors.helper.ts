@@ -7,6 +7,7 @@ import {
   PasswordError,
   PayloadError,
   PayloadTypeError,
+  SessionError,
   TokenError
 } from '../errors'
 import { HttpErrorType, ResponseErrorType } from '../types'
@@ -67,6 +68,9 @@ export function getResponseFromError(
     const currentError = handleZodError(error)
     return createResponseError(httpErrors.badRequest, currentError.message)
   }
+
+  if (error instanceof SessionError)
+    return createResponseError(httpErrors.unauthorized, error.message)
 
   logger.debug(error)
   return createResponseError(httpErrors.internalServerError, errorMessage)
